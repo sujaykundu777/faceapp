@@ -1,0 +1,29 @@
+{
+  "name": "urbanpiper-frontend",
+  "version": "1.0.0",
+  "description": "react web app",
+  "main": "server.js",
+  "dependencies": {
+    "eslint": "^4.19.1",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1"
+  },
+  "scripts": {
+    "server": "node server.js",
+    "client": "cd client && npm start",
+    "start": "concurrently \"npm run server\" \"cd client && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sujaykundu777/urbanpiper-frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sujaykundu777/urbanpiper-frontend/issues"
+  },
+  "homepage": "https://github.com/sujaykundu777/urbanpiper-frontend#readme"
+}
