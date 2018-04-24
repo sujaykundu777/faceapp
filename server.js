@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var db = require('./db');
 
 app.set("port", process.env.PORT || 3001);
 
@@ -13,4 +14,16 @@ app.get('/', function(req,res){
 });
 app.listen(app.get("port"), () => {
     console.log(`[1] Server is running at: http://localhost:${app.get("port") }/ `); 
+});
+
+// Connect to MySQL on start
+db.connect(db.MODE_PRODUCTION, function(err) {
+  if (err) {
+    console.log('Err: Unable to connect to MySQL.');
+    process.exit(1);
+  } else {
+    app.listen(3002, function() {
+      console.log('[2] MySQL Listening on port 3002...');
+    });
+  }
 });

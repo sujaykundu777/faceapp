@@ -1,0 +1,40 @@
+.App-logo {
+    /* animation: App-logo-spin infinite 20s linear; */
+    height: 70px;
+    margin-top:4px;
+  }
+  
+  .App-header {
+    background-color: #222;
+    height: 90px;
+    color: white;
+    /*border: 1px solid #fff; */
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .App-brand,.App-nav{
+    /* border: 1px solid #fff; */
+    margin:5px;
+  }
+  .App-brand{
+    width: 25%;
+    height: 80px;
+  }
+
+
+.App-nav{
+    width: 65%;
+    height: 80px;
+  }
+  
+  .App-nav-container {
+    display: flex;
+    justify-content: center;
+    padding:5px;
+  }
+  .App-nav-link{
+    padding:5px;
+    list-style-type: none;
+  }
+  

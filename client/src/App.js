@@ -1,36 +1,26 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Header from './components/common/Header/Header';
+import Home from './components/Home/Home';
+import Login from './components/Login/Login';
+import Dashboard from './components/dashboard/Dashboard/Dashboard';
 import './App.css';
-import logo from './logo.png';
 
 
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <div className="App-brand">
-            <img src={logo} alt="logo" className="App-logo" />
+      <Router>
+         <div className="App">
+          <Header />
+          <Switch>  
+            <Route path="/" component={Home} exact />
+            <Route path="/login" component={Login} exact />
+            <Route path="/dashboard" component={Dashboard} exact />
+          </Switch> 
           </div>
-          
-          {/* <nav className="App-nav">
-                <ul className="App-nav-container">
-                  <li className="App-nav-link">Home</li>
-                  <li className="App-nav-link">Login</li>
-                </ul>
-              </nav> */}
-        </header>
-        <div className="App-main-content">
-            <p className="App-intro">
-                  
-                <h1 className="App-title">App to demonstrate Face Recognition </h1>
-                <br />
-                <Button secondary>Get Started</Button>
-            </p>
-        </div>
-        
-      </div>
+      </Router>
     );
   }
 }
