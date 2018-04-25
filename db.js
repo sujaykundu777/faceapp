@@ -1,11 +1,20 @@
-var mysql = require('mysql')
-  , async = require('async')
+var mysql = require('mysql');
+var async = require('async');
+var dotenv = require('dotenv');
 
-var PRODUCTION_DB = 'my_db'
-  , TEST_DB = 'my_db'
+const result = dotenv.config();
+if (result.error) {
+  throw result.error
+}
+ 
+console.log("Connecting to Database : ");
+console.log(result.parsed);
 
-exports.MODE_TEST = 'mode_test'
-exports.MODE_PRODUCTION = 'mode_production'
+var PRODUCTION_DB = process.env.DB_NAME;
+var TEST_DB = process.env.DB_NAME;
+
+exports.MODE_TEST = 'mode_test';
+exports.MODE_PRODUCTION = 'mode_production';
 
 var state = {
   pool: null,
@@ -14,9 +23,9 @@ var state = {
 
 exports.connect = function(mode, done) {
   state.pool = mysql.createPool({
-    host: 'localhost',
-    user     : 'root',
-    password : 'tomcruise22',
+    host     : process.env.DB_HOST,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASS,
     database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB
   })
 
