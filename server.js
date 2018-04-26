@@ -77,7 +77,24 @@ app.use('/users',users);
 app.use('/auth',auth);
 
 
+//Create a User
+app.get('/setup', function(req, res) {
 
+  // create a sample user
+  var nick = new User({ 
+    email: 'nick123@gmail.com', 
+    password: 'pass123',
+    admin: true 
+  });
+
+  // save the sample user
+  nick.save(function(err) {
+    if (err) throw err;
+
+    console.log('User saved successfully');
+    res.json({ success: true });
+  });
+});
 
 /**
  * Error handlers

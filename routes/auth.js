@@ -60,8 +60,13 @@ router.post('/signin', (req, res) => {
       // Check if password matches
       user.comparePassword(req.body.password, function(err, isMatch) {
         if (isMatch && !err) {
-          // Create token if the password matched and no error was thrown
-          var JWTtoken = jwt.sign(user.toJSON(), config.auth.secret, {
+        // if user is found and password is right
+        // create a token with only our given payload
+        // we don't want to pass in the entire user since that has the password
+        const payload = {
+           admin: user.admin 
+          };
+          var JWTtoken = jwt.sign(payload, config.auth.secret, {
             expiresIn: "2 days"
           });
           res.json({
@@ -80,4 +85,55 @@ router.post('/signin', (req, res) => {
   });
 });
 
+//Middleware for Authenticating Routes 
+//To check whether the user have access to the route (logged in or not)
+
+function isAuthenticated(req, res, next){
+  
+    //check header for token
+    var JWTtoken = req.body.token || req.query.token || req.headers['x-access-token'];
+
+    //decode token
+    if(JWTtoken){
+         jwt.verify(JWTtoken, config.auth.secret, function(err, decoded){
+             if(err){
+               return res.json({
+                 success: false,
+                 message: 'Failed to authenticate token !' 
+               });
+             }    
+             else{
+               // if everything is good, save request for use in other routes
+               req.decoded = decoded;
+               next();
+              } 
+         });
+       }
+    else{
+      //if there is no token 
+      //return an error 
+      return res.status(403).send({
+           success: false,
+           message: 'No token Provided'
+      });
+    }
+};
+
+
+router.get('/profile', isAuthenticated, (req,res) => {
+  res.send('Welcome User');
+});
+
+
+// Logout 
+router.get('/logout', (req,res) => {
+   res.status(200).send({
+     success: false,
+     token: null
+   })
+});
+
+
+
 module.exports = router;
+
