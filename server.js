@@ -29,8 +29,6 @@ var User = require('./models/User.js');
 
 //Import routes
 var index = require('./routes/index');
-var users = require('./routes/users');
-var auth = require('./routes/auth');
 
 //monngoose db configuration ===============================================================
 mongoose.connect(database.localUrl); // Connect to local MongoDB instance.
@@ -70,14 +68,12 @@ app.use(function(req, res, next) {
 app.use(passport.initialize());
 require('./config/passport')(passport);
 
-
-//Use the routes
-app.use('/',index);
-app.use('/users',users);
-app.use('/auth',auth);
+app.get('/', (req,res) => {
+ res.send('Welcome to Express Backend API');
+});
 
 
-//Create a User
+//Create the First User (Setup)
 app.get('/setup', function(req, res) {
 
   // create a sample user
@@ -95,6 +91,10 @@ app.get('/setup', function(req, res) {
     res.json({ success: true });
   });
 });
+
+//Use the routes
+app.use('/api',index);
+
 
 /**
  * Error handlers
