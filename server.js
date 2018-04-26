@@ -1,10 +1,17 @@
 var express = require('express');
 var app = express();
-var db = require('./db');
+var mongoose = require('mongoose');
+//mongoose db settings
+var database = require('./config/index.js');
+//mysql db configuration 
+//var db = require('./db');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var jwt = require('jsonwebtoken');
 var path = require("path");
+var pretty = require('express-prettify');
+var passport = require('passport');
 require('dotenv').config();
 
 //Sets the port for express server
@@ -13,12 +20,32 @@ app.set("port", process.env.PORT);
 //Set cross-origin resource sharing headers for all routes 
 app.use(cors());
 
+//use prettify json
+app.use(pretty({ query: 'pretty' }));
+
+
+//Import models
+var User = require('./models/User.js');
+
+//Import routes
+var index = require('./routes/index');
+var users = require('./routes/users');
+
+//monngoose db configuration ===============================================================
+mongoose.connect(database.localUrl); // Connect to local MongoDB instance.
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+app.set('JWT_SECRET', 'SecretKey');
+
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-
 
 //Configure body parser to parse incoming requests
 //support parsing of application/json type post data
@@ -27,6 +54,9 @@ app.use(bodyParser.json());
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(cookieParser());
+
+//Headers Support
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
@@ -34,35 +64,19 @@ app.use(function(req, res, next) {
   next();
 });
 
-//API Routes
-app.get('/', function(req,res){
-  res.send('Backend API is working');
-});
 
-app.get('/api/v1/auth/signup', function(req,res){
- res.send('Signup API');
-})
+// Init passport
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
-app.post('/api/v1/auth/signup', function(req,res,next){
+app.use('/',index);
+app.use('/users',users);
 
- var name = req.body.name;
- var email = req.body.email;
- var password = req.body.password;
-
-  //debugging output for the terminal
-  console.log('you posted: Name: ' + name + ', Email: ' + email + ', Password : ' + password);
-
-});
+/**
+ * Error handlers
+ */
 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -75,19 +89,31 @@ app.use(function(err, req, res, next) {
 
 
 
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+
+
 //Start the server
 app.listen(app.get("port"), () => {
     console.log(`[1] Server is running at: http://localhost:${app.get("port") }/ `); 
 });
 
 // Connect to MySQL on start
-db.connect(db.MODE_PRODUCTION, function(err) {
-  if (err) {
-    console.log('Err: Unable to connect to MySQL.');
-    process.exit(1);
-  } else {
-    app.listen(3002, function() {
-      console.log('[2] MySQL Listening on port 3002...');
-    });
-  }
-});
+// db.connect(db.MODE_PRODUCTION, function(err) {
+//   if (err) {
+//     console.log('Err: Unable to connect to MySQL.');
+//     process.exit(1);
+//   } else {
+//     app.listen(3002, function() {
+//       console.log('[2] MySQL Listening on port 3002...');
+//     });
+//   }
+// });
+
+// expose app
+module.exports = app;
