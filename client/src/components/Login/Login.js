@@ -47,10 +47,10 @@ class Login extends Component {
   
     this.Auth.login(this.state.email,this.state.password)
         .then(res =>{
-           this.props.history.replace('/');
+           this.props.history.replace('/dashboard');
         })
         .catch(err =>{
-            alert(err);
+            alert('Wrong Credentials');
         })
 }
 

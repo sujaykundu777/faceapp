@@ -14,9 +14,9 @@ export default function withAuth(AuthComponent) {
             if (!Auth.loggedIn()) {
                 this.props.history.replace('/login')
             }
-            else {
-                this.props.history.replace('/dashboard')
+            else { 
                 try {
+               
                     const profile = Auth.getProfile()
                     this.setState({
                         user: profile

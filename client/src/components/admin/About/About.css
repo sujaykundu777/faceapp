@@ -1,0 +1,17 @@
+.AboutContainer{
+    height: 300px;
+    width: 100%;
+    text-align: center;   
+    
+  }
+  .DashContainer{
+    background-color: #ccc;
+    color: #000;
+    padding-top: 60px;
+    text-align:center;
+    height: 600px;
+}
+.App {
+    text-align: center;
+  }
+  
