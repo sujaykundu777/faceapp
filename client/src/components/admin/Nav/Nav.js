@@ -33,7 +33,6 @@ class Nav extends Component {
       );
   }
 
-
 }
 
 export default withAuth(Nav);
