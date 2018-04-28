@@ -3,36 +3,16 @@ var router = express.Router();
 let passport = require('passport');
 let jwt = require('jsonwebtoken');
 var User = require('../models/User');
+var Image = require('../models/Image');
 let config = require('../config');
 //File Upload
 var multer  = require('multer');
 var uuidv4 = require('uuid/v4');
 var path = require('path');
+var cors = require('cors');
+router.use(cors());
 
-var storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-     /*
-          Files will be saved in the 'uploads' directory. Make
-          sure this directory already exists!
-        */
-    callback(null, './uploads');
-  },
-  filename: function (req, file, callback) {
-     /*
-          uuidv4() will generate a random ID that we'll use for the
-          new filename. We use path.extname() to get
-          the extension from the original file name and add that to the new
-          generated ID. These combined will create the file name used
-          to save the file on the server and will be available as
-          req.file.pathname in the router handler.
-        */
-    const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-    callback(null, newFilename);
-  }
-});
-
-var upload = multer({ storage: storage });
-
+var upload = multer({ dest: 'uploads/' }).single('selectedFile');
 
 //API routes
 
@@ -166,20 +146,15 @@ var upload = multer({ storage: storage });
   res.send('Welcome User');
   });
 
+  
    //Upload Image
-  router.post("/upload", upload.single('selectedFile'),function(req, res, next) {
-      
-             /*
-        We now have a new req.file object here. At this point the file has been saved
-        and the req.file.filename value will be the name returned by the
-        filename() function defined in the diskStorage configuration. Other form fields
-        are available here in req.body.
-      */
+  router.post("/upload", function(req, res, next) {
       upload(req,res,function(err){
          if(err){
            return res.send("Error Uploading File !");
          }
          //save it to uploads folder
+         console.log('Image Saved to Uploads Folder');
          res.send('Image Upload Successful');
        });    
   

@@ -17,9 +17,6 @@ require('dotenv').config();
 //Sets the port for express server
 app.set("port", process.env.PORT);
 
-//Set cross-origin resource sharing headers for all routes 
-app.use(cors());
-
 //use prettify json
 app.use(pretty({ query: 'pretty' }));
 
@@ -55,6 +52,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
+//Set cross-origin resource sharing headers for all routes 
+app.use(cors());
+
+
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//   next();
+// });
 //Headers Support
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");

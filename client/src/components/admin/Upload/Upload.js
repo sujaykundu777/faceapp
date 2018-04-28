@@ -8,41 +8,50 @@ class Upload extends Component {
         super(props);
         this.state = { 
           selectedFile: '',
-          imagePreviewUrl: ''};
-      }
-       
+          imagePreviewUrl: ''
+      };
+      this._handleImageChange = this._handleImageChange.bind(this);
+		  this._handleSubmit = this._handleSubmit.bind(this);
+		
+    }
+
+
       _handleImageChange(event) {
         event.preventDefault();
     
         let reader = new FileReader();
-        let selectedFile = event.target.files[0];
-    
+         let file = event.target.files[0];
         reader.onloadend = () => {
           this.setState({
-            selectedFile: selectedFile,
+            selectedFile: file,
             imagePreviewUrl: reader.result
           });
         }
     
-        reader.readAsDataURL(selectedFile)
+        reader.readAsDataURL(file)
       }
 
       _handleSubmit(event) {
         event.preventDefault();
+      //  console.log(this.state.selectedFile);
+        var formData = new FormData();
+      
+        // Fields in the post
+        formData.append('selectedFile', this.state.selectedFile);
+        // formData.append('imagePreviewUrl', this.state.imagePreviewUrl);
+        let myHeaders = new Headers({
+          'Access-Control-Allow-Origin':'*',
+          });
 
-        let formData = new FormData();
-
-        formData.append('myFile', this.state.selectedFile, this.state.imagePreviewUrl);
-
-        axios.post('http://localhost:3001/api/upload', formData)
-           .then(function(response){
-              console.log(response);
-           });
-        console.log('Selected Image Details :', this.state.selectedFile);
-        console.log('Selected Image Url', this.state.imagePreviewUrl)
-      } 
-    
-    
+        fetch('http://localhost:3001/api/upload', {
+          method: 'POST',
+          body: formData,
+          headers: myHeaders
+        })
+        .then( function(res) {
+          alert('Image Upload Successful');
+        })
+      }
 
    render(){
     let {imagePreviewUrl} = this.state;
@@ -57,11 +66,11 @@ class Upload extends Component {
                        
                         <h1> Upload Your Profile Photo </h1>
                       
-                        <Form onSubmit={(event)=>this._handleSubmit(event)}>
+                        <Form onSubmit={this._handleSubmit}>
                         <Input className="fileInput" 
                                type="file" 
                                name="selectedFile"
-                               onChange={(event)=>this._handleImageChange(event)} />
+                               onChange={this._handleImageChange} />
                                
                                  <Button secondary 
                                  type="submit" >
