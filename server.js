@@ -20,6 +20,9 @@ app.set("port", process.env.PORT);
 //use prettify json
 app.use(pretty({ query: 'pretty' }));
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 
 //Import models
 var User = require('./models/User.js');
@@ -39,9 +42,9 @@ app.set('JWT_SECRET', 'SecretKey');
 
 
 // Express only serves static assets in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static("client/build"));
+// }
 
 //Configure body parser to parse incoming requests
 //support parsing of application/json type post data
@@ -74,9 +77,16 @@ app.use(function(req, res, next) {
 app.use(passport.initialize());
 require('./config/passport')(passport);
 
-app.get('/', (req,res) => {
- res.send('Welcome to Express Backend API');
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
+
+
+// app.get('/', (req,res) => {
+//  res.send('Welcome to Express Backend API');
+// });
 
 
 //Create the First User (Setup)
