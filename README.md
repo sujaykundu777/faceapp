@@ -82,8 +82,14 @@ curl -X POST "https://api-us.faceplusplus.com/facepp/v3/detect" -F "api_key=<api
 -F "return_attributes=gender,age"
 ```
 
+Testing :
 
-
+```
+$ curl -X POST "https://api-us.faceplusplus.com/facepp/v3/detect" -F "api_key=23WMp1Qn5l7vB4bZ0Uv3JCfoP3C1T--O" \
+-F "api_secret=-lHR7PSfCp-ONDAkbocf53BG2MpXRDdp" \
+-F "image_url=https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-9/28378869_128168764674178_5154762980780939156_n.jpg?_nc_cat=0&oh=c5ce0d195b982cecf4a1fc0fbe08d4e9&oe=5B5E04F7" \
+-F "return_attributes=gender,age"
+```
 
 
 
