@@ -5,12 +5,13 @@ let jwt = require('jsonwebtoken');
 var User = require('../models/User');
 var Image = require('../models/Image');
 let config = require('../config');
-//File Upload
+var axios = require('axios');
 var multer  = require('multer');
 var uuidv4 = require('uuid/v4');
 var path = require('path');
 var cors = require('cors');
 router.use(cors());
+
 
 var upload = multer({ dest: 'uploads/' }).single('selectedFile');
 
@@ -167,5 +168,54 @@ var upload = multer({ dest: 'uploads/' }).single('selectedFile');
     token: null
   })
   });
+
+  
+  // fpp.get('detection/detect', parameters, function(err, res) {
+  //   console.log(res);
+  // });
+ 
+
+router.get('/fpp',function(req,res){
+   
+    axios({
+      url: 'https://api-us.faceplusplus.com/facepp/v3/detect',
+      method: 'post',
+       data: {
+        api_key :  '23WMp1Qn5l7vB4bZ0Uv3JCfoP3C1T--O',
+        api_secret: '-lHR7PSfCp-ONDAkbocf53BG2MpXRDdp',
+        image_url: 'https://www.colourbox.com/preview/4284564-a-small-boy-with-a-balloon-in-the-garden.jpg',
+        return_attributes: 'gender,age',
+        // img : {
+        //   value: fs.readFileSync('./profile.png'),
+        //   meta: {filename: 'profile.png'}
+        // }
+       }
+    })      
+    .then(function(response){
+        console.log('The Axios Response');
+    })
+    .catch((error) => {
+      // Error
+      if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          // console.log(error.response.data);
+          // console.log(error.response.status);
+          // console.log(error.response.headers);
+      } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+      } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+      }
+      console.log(error.config);
+  });
+
+
+});
+
 
   module.exports = router;
