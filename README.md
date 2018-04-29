@@ -67,11 +67,20 @@ Email : nick123@gmail.com
 Password: pass123
 ``` 
 
+
 Todo : 
- > Faceplusplus ( Not working )
- > Deploy to Heroku 
+ - Faceplusplus ( Not working )
+ - Deploy to Heroku 
 
+Sample Request for Face++  Api 
 
+```
+curl -X POST "https://api-us.faceplusplus.com/facepp/v3/detect" -F "api_key=<api_key>" \
+-F "api_secret=<api_secret>" \
+-F "image_file=@image_file.jpg" \
+-F "return_landmark=1" \
+-F "return_attributes=gender,age"
+```
 
 
 
