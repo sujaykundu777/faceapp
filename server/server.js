@@ -20,9 +20,10 @@ app.set("port", process.env.PORT);
 //use prettify json
 app.use(pretty({ query: 'pretty' }));
 
-// Serve static files from the React app( in production mode)
-app.use(express.static(path.join(__dirname, '../client/build')));
-
+// Express only serves static assets in production
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static('client/build'));
+// }
 
 //Import models
 var User = require('./models/User.js');
@@ -42,9 +43,9 @@ app.set('JWT_SECRET', 'SecretKey');
 
 
 // Express only serves static assets in production
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, '../client/build')));
-// }
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+}
 
 //Configure body parser to parse incoming requests
 //support parsing of application/json type post data

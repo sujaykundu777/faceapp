@@ -2,7 +2,7 @@
   "name": "faceapp",
   "version": "1.0.0",
   "description": "react web app",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "async": "^2.6.0",
     "axios": "^0.18.0",
