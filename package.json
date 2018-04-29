@@ -5,7 +5,8 @@
   "repository": {},
   "license": "MIT",
   "engines": {
-    "node": "6.14.1"
+    "node": "6.14.1",
+    "npm": "5.8.0"
   },
   "dependencies": {
     "concurrently": "^3.1.0",
@@ -15,7 +16,7 @@
     "build": "concurrently \"cd client && npm run build\" \"cd server && npm run build\"",
     "clean": "concurrently \"rimraf node_modules\" \"cd client && rimraf node_modules build\" \"cd server && rimraf node_modules build\"",
     "heroku-postbuild": "npm run build",
-    "install": "(cd client && npm install --only=dev && npm install ) && (cd server && npm install --only-dev && npm install)",
+    "install": "(cd client && npm install --only=dev && npm install ) && (cd server && npm install --only=dev && npm install)",
     "start": "concurrently \"cd client && PORT=3000 npm run start\" \"cd server && PORT=3001 npm run start\"",
     "start:prod": "cd server && npm run start:prod"
   }

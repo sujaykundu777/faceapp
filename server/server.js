@@ -21,7 +21,7 @@ app.set("port", process.env.PORT);
 app.use(pretty({ query: 'pretty' }));
 
 // Serve static files from the React app( in production mode)
-// app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 
 //Import models
@@ -42,9 +42,9 @@ app.set('JWT_SECRET', 'SecretKey');
 
 
 // Express only serves static assets in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, '../client/build')));
+// }
 
 //Configure body parser to parse incoming requests
 //support parsing of application/json type post data
@@ -84,9 +84,9 @@ app.get('*', (req, res) => {
 });
 
 
-app.get('/', (req,res) => {
- res.send('Welcome to Express Backend API');
-});
+// app.get('/', (req,res) => {
+//  res.send('Welcome to Express Backend API');
+// });
 
 
 //Create the First User (Setup)
