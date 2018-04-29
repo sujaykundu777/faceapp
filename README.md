@@ -6,7 +6,7 @@ Clone the github repo:
 
 ```
 $ git clone https://github.com/sujaykundu777/faceapp.git
-cd faceapp
+$ cd faceapp
 ```
 
 #### Requirements : Install node, npm and mongodb locally
@@ -54,6 +54,18 @@ $ cd faceapp
 $ npm start 
 ```
 The App should start at http://localhost:3000 
+
+Create the first User 
+
+```
+$ curl -i http://localhost:3001/api/setup
+```
+
+Login the App using the following credentials 
+```
+Email : nick123@gmail.com
+Password: pass123
+``` 
 
 Todo : 
  > Faceplusplus ( Not working )
