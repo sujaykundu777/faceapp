@@ -1,7 +1,7 @@
 import decode from 'jwt-decode';
 export default class AuthService {
     constructor(domain) {
-        this.domain = domain || 'http://localhost:3001/api'
+        this.domain = domain || '/api'
         this.fetch = this.fetch.bind(this)
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
@@ -9,7 +9,7 @@ export default class AuthService {
 
     login(email, password) {
         // Get a token
-        return this.fetch(`http://localhost:3001/api/signin`, {
+        return this.fetch(`/api/signin`, {
             method: 'POST',
             body: JSON.stringify({
                 email,
