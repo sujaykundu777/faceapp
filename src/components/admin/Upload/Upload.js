@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './Upload.css';
 import {Input,Button,Form} from 'semantic-ui-react';
-import axios from 'axios';
 
 class Upload extends Component {
     constructor(props) {
