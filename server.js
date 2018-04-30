@@ -1,10 +1,7 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-//mongoose db settings
 var database = require('./config/index.js');
-//mysql db configuration 
-//var db = require('./db');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
@@ -20,7 +17,6 @@ app.set("port", process.env.PORT);
 //use prettify json
 app.use(pretty({ query: 'pretty' }));
 
-
 //Import models
 var User = require('./models/User.js');
 
@@ -28,7 +24,7 @@ var User = require('./models/User.js');
 var index = require('./routes/index');
 
 //monngoose db configuration ===============================================================
-mongoose.connect(database.localUrl); // Connect to local MongoDB instance.
+mongoose.connect(database.remoteUrl); // Connect to remote MongoDB instance.
 
 //Get the default connection
 var db = mongoose.connection;
@@ -39,9 +35,9 @@ app.set('JWT_SECRET', 'SecretKey');
 
 
 // Express only serves static assets in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, '../client/build')));
+// }
 
 //Configure body parser to parse incoming requests
 //support parsing of application/json type post data
@@ -74,9 +70,10 @@ app.use(function(req, res, next) {
 app.use(passport.initialize());
 require('./config/passport')(passport);
 
-app.get('/', (req,res) => {
- res.send('Welcome to Express Backend API');
-});
+
+ app.get('/', (req,res) => {
+  res.send('Welcome to Express Backend API');
+ });
 
 
 //Create the First User (Setup)
@@ -131,17 +128,6 @@ app.listen(app.get("port"), () => {
     console.log(`[1] Server is running at: http://localhost:${app.get("port") }/ `); 
 });
 
-// Connect to MySQL on start
-// db.connect(db.MODE_PRODUCTION, function(err) {
-//   if (err) {
-//     console.log('Err: Unable to connect to MySQL.');
-//     process.exit(1);
-//   } else {
-//     app.listen(3002, function() {
-//       console.log('[2] MySQL Listening on port 3002...');
-//     });
-//   }
-// });
 
 // expose app
 module.exports = app;

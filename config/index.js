@@ -7,6 +7,6 @@ module.exports = {
   auth:{
     secret:'With Great Powers Comes Great Responsibility'
   },
-    remoteUrl: 'mongodb://node:nodeuser@mongo.onmodulus.net:27017/uwO3mypu',
+    remoteUrl: 'mongodb://sujaykundu777:tomcruise22@ds119258.mlab.com:19258/faceapp',
     localUrl: 'mongodb://127.0.0.1:27017/urbanpiper'
   };

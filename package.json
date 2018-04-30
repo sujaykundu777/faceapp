@@ -1,7 +1,7 @@
 {
-  "name": "urbanpiper-frontend",
+  "name": "faceapp",
   "version": "1.0.0",
-  "description": "react web app",
+  "description": "node server",
   "main": "server.js",
   "dependencies": {
     "async": "^2.6.0",
@@ -21,25 +21,33 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "babel-cli": "^6.22.2",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1"
+    "concurrently": "^3.5.1",
+    "babel-register": "^6.22.0",
+    "nodemon": "^1.11.0"
+  },
+  "engines": {
+    "node": "6.14.1",
+    "npm": "6.0.0"
   },
   "scripts": {
-    "server": "node server.js",
-    "client": "cd client && npm start",
-    "start": "concurrently \"npm run server\" \"cd client && npm start\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel . --ignore node_modules,build --out-dir build",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sujaykundu777/urbanpiper-frontend.git"
+    "url": "git+https://github.com/sujaykundu777/faceapp.git"
   },
   "author": "Sujay Kundu",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sujaykundu777/urbanpiper-frontend/issues"
+    "url": "https://github.com/sujaykundu777/faceapp/issues"
   },
-  "homepage": "https://github.com/sujaykundu777/urbanpiper-frontend#readme"
+  "homepage": "https://github.com/sujaykundu777/faceapp#readme"
 }
