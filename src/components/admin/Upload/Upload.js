@@ -42,7 +42,7 @@ class Upload extends Component {
           'Access-Control-Allow-Origin':'*',
           });
 
-        fetch('http://localhost:3001/api/upload', {
+        fetch('https://faceapp-node.herokuapp.com/api/upload', {
           method: 'POST',
           body: formData,
           headers: myHeaders
