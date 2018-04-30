@@ -1,6 +1,6 @@
 ## Face Recognition App Using React
 
-### Installation Steps 
+### Installation Steps for Development 
 
 Clone the github repo: 
 
@@ -70,9 +70,9 @@ Password: pass123
 
 Todo : 
  - Faceplusplus ( Not working )
- - Deploy to Heroku 
+ - Deploy to Heroku (Done)
 
-Sample Request for Face++  Api 
+Sample Request for Face++ API 
 
 ```
 curl -X POST "https://api-us.faceplusplus.com/facepp/v3/detect" -F "api_key=<api_key>" \
