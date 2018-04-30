@@ -1,7 +1,7 @@
 {
   "name": "faceapp",
   "version": "1.0.0",
-  "description": "node server",
+  "description": "faceapp server",
   "main": "server.js",
   "dependencies": {
     "async": "^2.6.0",
